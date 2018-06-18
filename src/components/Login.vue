@@ -107,7 +107,9 @@ import {HTTP} from '../main'
 export default {
   data: () => ({
     locale: 'de',
-    locales: ['gb', 'de']
+    locales: ['gb', 'de'],
+    response: [],
+    errors: []
   }),
   watch: {
     locale (val) {
@@ -116,9 +118,9 @@ export default {
   },
   methods: {
     login () {
-      HTTP.post('http://jsonplaceholder.typicode.com/posts', {})
+      HTTP.post('posts', {})
         .then(response => {
-          // 'response.data' contains the results
+          this.response = response.data
           this.$router.push({ path: '/signup' })
         })
         .catch(e => {

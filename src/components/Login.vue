@@ -1,3 +1,5 @@
+<!-- Login.vue -->
+
 <i18n>
 {
    "gb": {
@@ -100,15 +102,13 @@
 </template>
 
 <script>
+import {HTTP} from '../main'
+
 export default {
   data: () => ({
-    drawer: null,
     locale: 'de',
     locales: ['gb', 'de']
   }),
-  props: {
-    source: String
-  },
   watch: {
     locale (val) {
       this.$i18n.locale = val
@@ -116,15 +116,15 @@ export default {
   },
   methods: {
     login () {
-      this.http.post('http://jsonplaceholder.typicode.com/posts', {})
-        .then(response => {})
+      HTTP.post('http://jsonplaceholder.typicode.com/posts', {})
+        .then(response => {
+          // 'response.data' contains the results
+          this.$router.push({ path: '/signup' })
+        })
         .catch(e => {
           this.errors.push(e)
         })
-      this.$router.push({ path: '/signup' })
     }
-  },
-  computed: {
   }
 }
 </script>

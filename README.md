@@ -99,4 +99,4 @@ More [here](https://github.com/vikkio88/vue-flag-icon).
 yarn add axios
 ```
 
-More [here](https://alligator.io/vuejs/rest-api-axios/).
+More [here](https://alligator.io/vuejs/rest-api-axios/) and [here](https://github.com/axios/axios).

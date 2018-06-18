@@ -5,7 +5,7 @@
     <v-toolbar dark color="primary">
       <v-toolbar-title>IoT Project</v-toolbar-title>
       <v-toolbar-items>
-        <v-btn flat :to="{name: 'login'}">login</v-btn>
+        <v-spacer></v-spacer>
         <v-btn flat :to="{name: 'signup'}">signup</v-btn>
       </v-toolbar-items>
     </v-toolbar>

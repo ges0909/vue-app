@@ -1,9 +1,11 @@
-<!-- Login.vue -->
+<!-- Vuetify -->
 
 <i18n>
 {
    "gb": {
       "title": "Login form",
+      "remark": "You don't have a account? Signup",
+      "here": "here",
       "label": {
         "email": "E-mail",
         "password": "Password",
@@ -21,6 +23,8 @@
     },
    "de": {
       "title": "Anmeldung",
+      "remark": "Sie haben kein Konto? Registrieren Sie sich",
+      "here": "hier",
       "label": {
         "email": "E-Mail",
         "password": "Passwort",
@@ -40,7 +44,7 @@
 </i18n>
 
 <template>
-  <v-app id="inspire">
+  <v-app id="login">
     <v-content>
       <v-container fluid fill-height>
         <v-layout align-center justify-center>
@@ -69,6 +73,7 @@
                     name="email"
                     :label="$t('label.email')"
                     type="text"
+                    v-model="email"
                     :rules="[
                       v => !!v || $t('rule.email.required'),
                       v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || $t('rule.email.valid')
@@ -80,6 +85,7 @@
                     name="password"
                     :label="$t('label.password')"
                     type="password"
+                    v-model="password"
                     :rules="[
                       v => !!v || $t('rule.password.required')
                     ]"
@@ -89,11 +95,12 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click="login">
+                <v-btn color="primary" @click="onSubmit">
                   {{ $t('label.login') }}
                 </v-btn>
               </v-card-actions>
             </v-card>
+            {{ $t('remark') }} <router-link to="sign-up">{{ $t('here') }}</router-link>.
           </v-flex>
         </v-layout>
       </v-container>
@@ -102,14 +109,17 @@
 </template>
 
 <script>
-import {HTTP} from '../main'
+// import {HTTP} from '../main'
+import firebase from 'firebase'
 
 export default {
   data: () => ({
     locale: 'de',
     locales: ['gb', 'de'],
     response: [],
-    errors: []
+    errors: [],
+    email: '',
+    password: ''
   }),
   watch: {
     locale (val) {
@@ -117,15 +127,20 @@ export default {
     }
   },
   methods: {
-    login () {
-      HTTP.post('posts', {})
-        .then(response => {
-          this.response = response.data
-          this.$router.push({ path: '/signup' })
-        })
-        .catch(e => {
-          this.errors.push(e)
-        })
+    onSubmit (event) {
+      // HTTP.post('posts', {})
+      //   .then(response => {
+      //     this.response = response.data
+      //     this.$router.push({ path: '/welcome' })
+      //   })
+      //   .catch(e => {
+      //     this.errors.push(e)
+      //   })
+      firebase.auth().signInWithEmailAndPassword(this.email, this.password)
+      .then(
+        user => this.$router.push({ path: '/welcome' }),
+        error => alert('Oops! : ' + error)
+      )
     }
   }
 }

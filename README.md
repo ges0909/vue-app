@@ -1,5 +1,9 @@
 # Vue 2
 
+## Intro
+
+* [Vue 2 + Firebase: How to build a Vue app with Firebase authentication system in 15 minutes](https://medium.com/@anas.mammeri/vue-2-firebase-how-to-build-a-vue-app-with-firebase-authentication-system-in-15-minutes-fdce6f289c3c)
+
 ## Build Setup
 
 ```bash
@@ -49,13 +53,27 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 
 ## Plugins
 
-### vuetify
+### UI components
+
+* [11 Vue.js UI Component Libraries You Should Know In 2018](https://blog.bitsrc.io/11-vue-js-component-libraries-you-should-know-in-2018-3d35ad0ae37f)
+
+#### Vuetify
 
 ```bash
 # scaffold project with vuetify webpack template
 vue init vuetifyjs/webpack vue-app
 # or
 yarn add vuetify
+```
+
+#### Bootstrap Vue
+
+* [Bootstrap + Vue](https://bootstrap-vue.js.org/docs)
+
+```bash
+vue init bootstrap-vue/webpack-simple vue-app
+# or
+yarn add bootstrap-vue
 ```
 
 ### vue-i18n
@@ -100,3 +118,9 @@ yarn add axios
 ```
 
 More [here](https://alligator.io/vuejs/rest-api-axios/) and [here](https://github.com/axios/axios).
+
+### Firebase
+
+```bash
+yarn add firebase
+```

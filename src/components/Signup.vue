@@ -1,25 +1,62 @@
+<!-- Bootstrap Vue -->
+
 <template>
-  <v-form v-model="valid">
-    <v-text-field v-model="email" :rules="emailRules" label="E-Mail" required></v-text-field>
-    <v-text-field v-model="name" :rules="nameRules" :counter="10" label="Firstname" required></v-text-field>
-    <v-text-field v-model="name" :rules="nameRules" :counter="10" label="Lastname" required></v-text-field>
-  </v-form>
+  <b-container>
+    <b-card align="center" style="max-width: 20rem;">
+      <b-form @submit="onSubmit" @reset="onReset" v-if="show">
+        <b-form-group>
+          <b-form-input
+            type="email"
+            v-model="form.email"
+            placeholder="Email"
+            required>
+          </b-form-input>
+        </b-form-group>
+        <b-form-group>
+          <b-form-input
+            type="password"
+            v-model="form.password"
+            placeholder="Password"
+            required>
+          </b-form-input>
+        </b-form-group>
+        <b-button type="submit" variant="primary">Submit</b-button>
+        <b-button type="reset" variant="danger">Reset</b-button>
+      </b-form>
+    </b-card>
+  </b-container>
 </template>
 
 <script>
+import firebase from 'firebase'
+
 export default {
-  data: () => ({
-    valid: false,
-    name: '',
-    nameRules: [
-      v => !!v || 'Name is required',
-      v => v.length <= 10 || 'Name must be less than 10 characters'
-    ],
-    email: '',
-    emailRules: [
-      v => !!v || 'E-mail is required',
-      v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || 'E-mail must be valid'
-    ]
-  })
+  data () {
+    return {
+      form: {
+        email: '',
+        password: ''
+      },
+      show: true
+    }
+  },
+  methods: {
+    onSubmit (event) {
+      event.preventDefault()
+      firebase.auth().createUserWithEmailAndPassword(this.form.email, this.form.password)
+      .then(
+        user => alert('You are registered successfully!'),
+        error => alert('Something went wrong: ' + error)
+      )
+    },
+    onReset (event) {
+      event.preventDefault()
+      this.form.email = ''
+      this.form.password = ''
+      /* Trick to reset/clear native browser form validation state */
+      this.show = false
+      this.$nextTick(() => { this.show = true })
+    }
+  }
 }
 </script>

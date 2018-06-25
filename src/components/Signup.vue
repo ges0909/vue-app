@@ -1,5 +1,3 @@
-<!-- Bootstrap Vue -->
-
 <template>
   <b-container>
     <b-card align="center" style="max-width: 20rem;">
@@ -43,8 +41,7 @@ export default {
   methods: {
     onSubmit (event) {
       event.preventDefault()
-      firebase.auth().createUserWithEmailAndPassword(this.form.email, this.form.password)
-      .then(
+      firebase.auth().createUserWithEmailAndPassword(this.form.email, this.form.password).then(
         user => alert('You are registered successfully!'),
         error => alert('Something went wrong: ' + error)
       )

@@ -11,7 +11,7 @@
       "login": "Anmelden",
       "signup": "Registrieren",
       "logout": "Abmelden"
-      }
+    }
 }
 </i18n>
 
@@ -34,6 +34,7 @@
 
 <script>
 import firebase from 'firebase'
+import { EventBus } from './eventbus'
 
 export default {
   data: () => ({
@@ -46,11 +47,16 @@ export default {
     }
   },
   methods: {
-    logout() {
+    logout () {
       firebase.auth().signOut().then(() => {
         this.$router.push({ path: '/login' })
       })
     }
+  },
+  mounted: () => {
+    EventBus.$on('changelocale', () => {
+      alert('changelocale')
+    })
   }
 }
 </script>

@@ -1,5 +1,3 @@
-<!-- Vuetify -->
-
 <i18n>
 {
    "gb": {
@@ -111,6 +109,7 @@
 <script>
 // import {HTTP} from '../main'
 import firebase from 'firebase'
+import { EventBus } from '../eventbus'
 
 export default {
   data: () => ({
@@ -124,6 +123,7 @@ export default {
   watch: {
     locale (val) {
       this.$i18n.locale = val
+      EventBus.$emit('changelocale')
     }
   },
   methods: {
@@ -136,8 +136,7 @@ export default {
       //   .catch(e => {
       //     this.errors.push(e)
       //   })
-      firebase.auth().signInWithEmailAndPassword(this.email, this.password)
-      .then(
+      firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
         user => this.$router.push({ path: '/welcome' }),
         error => alert('Oops! : ' + error)
       )

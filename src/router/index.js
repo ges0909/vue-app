@@ -1,50 +1,49 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import firebase from 'firebase'
-import Login from '@/components/Login'
+import Home from '@/components/Home'
+import Signin from '@/components/Signin'
 import Signup from '@/components/Signup'
-import Welcome from '@/components/Welcome'
 
 Vue.use(Router)
 
-let router = new Router({
-  routes: [
-    {
-      // redirect unknown paths to Login view
-      path: '*',
-      redirect: 'login'
-    },
-    {
-      path: '/',
-      redirect: 'login'
-    },
-    {
-      path: '/login',
-      name: 'login',
-      component: Login
-    },
-    {
-      path: '/sign-up',
-      name: 'signup',
-      component: Signup
-    },
-    {
-      path: '/welcome',
-      name: 'welcome',
-      component: Welcome,
-      meta: {
-        requiresAuth: true
-      }
+const routes = [
+  {
+    // redirect unknown paths to Login view
+    path: '*',
+    redirect: 'signin'
+  },
+  {
+    path: '/',
+    redirect: 'signin'
+  },
+  {
+    name: 'signin',
+    path: '/signin',
+    component: Signin
+  },
+  {
+    name: 'signup',
+    path: '/signup',
+    component: Signup
+  },
+  {
+    name: 'home',
+    path: '/home',
+    component: Home,
+    meta: {
+      requiresAuth: true
     }
-  ]
-})
+  }
+]
 
-router.beforeEach((to, from, next) => {
-  let currentUser = firebase.auth().currentUser
-  let requiresAuth = to.matched.some((record) => record.meta.redirect)
-  if (requiresAuth && !currentUser) next('login')
-  else if (!requiresAuth && currentUser) next('/welcome')
-  else next()
+export default new Router({
+  mode: 'history',
+  routes
+  // beforeEach: (to, from, next) => {
+  //   let currentUser = firebase.auth().currentUser
+  //   let requiresAuth = to.matched.some((record) => record.meta.redirect)
+  //   if (requiresAuth && !currentUser) next('sigin')
+  //   else if (!requiresAuth && currentUser) next('home')
+  //   else next()
+  // }
 })
-
-export default router

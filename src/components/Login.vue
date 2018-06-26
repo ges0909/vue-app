@@ -2,7 +2,7 @@
 {
    "gb": {
       "title": "Login form",
-      "remark": "You don't have a account? Signup",
+      "remark": "You don't have an account? Signup",
       "here": "here",
       "label": {
         "email": "E-mail",

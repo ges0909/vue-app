@@ -4,20 +4,15 @@ import firebase from 'firebase'
 import Vuetify from 'vuetify'
 import VueI18n from 'vue-i18n'
 import FlagIcon from 'vue-flag-icon'
-import BootstrapVue from 'bootstrap-vue'
 import router from './router'
 import App from './App'
 
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 Vue.use(Vuetify)
 Vue.use(VueI18n)
 Vue.use(FlagIcon)
-Vue.use(BootstrapVue)
-
 Vue.config.productionTip = false
 
 export const HTTP = axios.create({

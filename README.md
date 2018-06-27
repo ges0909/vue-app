@@ -4,8 +4,8 @@
 
 * propagate locale changes to navigation bar
 * add missing fields to sign-up form
-* _Reset_ button in forms
-* locale switcher with label
+* ~~_Reset_ button in forms~~
+* ~~locale switcher with label~~
 
 ## Intro
 
@@ -130,4 +130,10 @@ More [here](https://alligator.io/vuejs/rest-api-axios/) and [here](https://githu
 
 ```bash
 yarn add firebase
+```
+
+### Vuex
+
+```bash
+yarn add vuex
 ```

@@ -7,8 +7,6 @@ import FlagIcon from 'vue-flag-icon'
 import router from './router'
 import App from './App'
 
-// @ points in vue  to 'src/'
-
 import 'vuetify/dist/vuetify.min.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 

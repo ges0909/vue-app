@@ -1,16 +1,16 @@
 <i18n>
 {
-   "gb": {
-      "title": "IoT Project",
-      "home": "home",
+   "en": {
+      "title": "My App",
+      "home": "Home",
       "singin": "Sigin",
       "signup": "Signup",
       "logout": "Logout"
     },
    "de": {
-      "title": "IoT Projekt",
-      "home": "home",
-      "singin": "Anmelden",
+      "title": "Meine App",
+      "home": "Home",
+      "signin": "Anmelden",
       "signup": "Registrieren",
       "logout": "Abmelden"
     }
@@ -24,23 +24,24 @@
         <v-list-tile
           v-for="item in items"
           :key="item.title"
-          :to="item.path">
+          :to="item.path"
+          v-show="item.show">
           <v-list-tile-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-tile-action>
-          <v-list-tile-content>{{ item.key }}</v-list-tile-content>
+          <v-list-tile-content>{{ $t(item.title) }}</v-list-tile-content>
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
 
     <v-toolbar app>
       <span class="hidden-sm-and-up">
-        <v-toolbar-side-icon @click="sidebar = !sidebar">
+        <v-toolbar-side-icon @click="sidebar=!sidebar">
         </v-toolbar-side-icon>
       </span>
       <v-toolbar-title>
-        <router-link to="/home" tag="span" style="cursor: pointer">
-          {{ $t('title') }}
+        <router-link to="/" tag="span" style="cursor: pointer">
+          <h1>{{ $t('title') }}</h1>
         </router-link>
       </v-toolbar-title>
       <v-spacer></v-spacer>
@@ -49,16 +50,24 @@
           flat
           v-for="item in items"
           :key="item.title"
-          :to="item.path">
+          :to="item.path"
+          v-show="item.show">
           <v-icon left dark>{{ item.icon }}</v-icon>
-          {{ item.title }}
+          {{ $t(item.title) }}
         </v-btn>
+        <v-menu offset-y>
+          <v-btn flat slot="activator">
+            <flag :iso="lang"></flag>
+          </v-btn>
+          <v-list>
+            <v-list-tile v-for="l in languages" :key="l" @click.prevent="lang=l">
+              <v-list-tile-title>
+                <flag :iso="l" />
+              </v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
       </v-toolbar-items>
-      <!-- <v-toolbar-items>
-        <v-btn flat :to="{name: 'login'}">{{ $t('login') }}</v-btn>
-        <v-btn flat :to="{name: 'signup'}">{{ $t('signup') }}</v-btn>
-        <v-btn flat @click="logout">{{ $t('logout') }}</v-btn>
-      </v-toolbar-items> -->
     </v-toolbar>
 
     <v-content>
@@ -69,19 +78,24 @@
 
 <script>
 import firebase from 'firebase'
-import { EventBus } from './eventbus'
+// import { EventBus } from './eventbus'
 
 export default {
   data: () => ({
     sidebar: false,
-    items: null,
-    locale: 'de',
-    locales: ['gb', 'de']
+    items: [
+      { title: 'home', path: '/home', icon: 'home', show: false },
+      { title: 'signin', path: '/signin', icon: 'lock', show: true },
+      { title: 'signup', path: '/signup', icon: 'person', show: true },
+      { title: 'logout', path: '/logout', icon: 'close', show: false }
+    ]
   }),
-  watch: {
-    locale (val) {
-      this.$i18n.locale = val
-    }
+  computed: {
+    lang: {
+      get () { return (this.$i18n.locale === 'en') ? 'gb' : this.$i18n.locale },
+      set (l) { this.$i18n.locale = (l === 'gb') ? 'en' : l }
+    },
+    languages () { return Object.keys(this.$i18n.messages).map(l => l === 'en' ? 'gb' : l) }
   },
   methods: {
     logout () {
@@ -91,14 +105,9 @@ export default {
     }
   },
   mounted: () => {
-    EventBus.$on('changelocale', () => {
-      alert('changelocale')
-    })
-    this.items = [
-      { title: this.$i18n.t('home'), path: '/home', icon: 'home' }, // this.$i18n.t('home')
-      { title: 'signin', path: '/signin', icon: 'lock' },
-      { title: 'signup', path: '/signup', icon: 'person' }
-    ]
+    // EventBus.$on('changelocale', () => {
+    //   alert('changelocale')
+    // })
   }
 }
 </script>

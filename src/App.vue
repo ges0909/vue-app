@@ -39,13 +39,15 @@
         <v-toolbar-side-icon @click="sidebar=!sidebar">
         </v-toolbar-side-icon>
       </span>
-      <v-toolbar-title>
-        <router-link to="/" tag="span" style="cursor: pointer">
-          <h1>{{ $t('title') }}</h1>
-        </router-link>
+      <v-toolbar-title id="title">
+        <h1>
+          <router-link to="/" tag="span" style="cursor: pointer">
+            {{ $t('title') }}
+          </router-link>
+        </h1>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-items class="hidden-xs-only">
+      <v-toolbar-items class="hidden-sm-and-down">
         <v-btn
           flat
           v-for="item in items"
@@ -58,12 +60,18 @@
         <v-menu offset-y>
           <v-btn flat slot="activator">
             <flag :iso="lang"></flag>
+            <v-spacer></v-spacer>
+            {{ lang }}
           </v-btn>
           <v-list>
-            <v-list-tile v-for="l in languages" :key="l" @click.prevent="lang=l">
-              <v-list-tile-title>
-                <flag :iso="l" />
-              </v-list-tile-title>
+            <v-list-tile v-for="ln in languages" :key="ln" @click.prevent="lang=ln">
+              <flag :iso="ln"></flag>
+              <v-spacer></v-spacer>
+              <v-list-tile-content>
+                <v-list-tile-title>
+                  {{ ln.toUpperCase() }}
+                </v-list-tile-title>
+              </v-list-tile-content>
             </v-list-tile>
           </v-list>
         </v-menu>
@@ -78,7 +86,7 @@
 
 <script>
 import firebase from 'firebase'
-// import { EventBus } from './eventbus'
+import { EventBus } from './eventbus'
 
 export default {
   data: () => ({
@@ -92,10 +100,16 @@ export default {
   }),
   computed: {
     lang: {
-      get () { return (this.$i18n.locale === 'en') ? 'gb' : this.$i18n.locale },
-      set (l) { this.$i18n.locale = (l === 'gb') ? 'en' : l }
+      get () {
+        return (this.$i18n.locale === 'en') ? 'gb' : this.$i18n.locale
+      },
+      set (ln) {
+        this.$i18n.locale = (ln === 'gb') ? 'en' : ln
+      }
     },
-    languages () { return Object.keys(this.$i18n.messages).map(l => l === 'en' ? 'gb' : l) }
+    languages () {
+      return Object.keys(this.$i18n.messages).map(ln => ln === 'en' ? 'gb' : ln)
+    }
   },
   methods: {
     logout () {
@@ -104,10 +118,11 @@ export default {
       })
     }
   },
-  mounted: () => {
-    // EventBus.$on('changelocale', () => {
-    //   alert('changelocale')
-    // })
+  mounted () {
+    var self = this
+    EventBus.$on('signed-in', () => {
+      self.items.forEach(item => { item.show = !item.show })
+    })
   }
 }
 </script>

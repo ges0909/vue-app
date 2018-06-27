@@ -5,6 +5,7 @@
       "email": "E-mail",
       "password": "Password",
       "signin": "Signin",
+      "reset": "Reset",
       "rule": {
         "email": {
           "required": "E-mail is required",
@@ -20,6 +21,7 @@
       "email": "E-Mail",
       "password": "Passwort",
       "signin": "Anmelden",
+      "reset": "Abbrechen",
       "rule": {
         "email": {
           "required": "E-Mail ist erforderlich",
@@ -44,22 +46,31 @@
           <v-layout column>
             <v-flex>
               <v-text-field
+                name="email"
                 :label="$t('email')"
                 type="email"
-                required
-                v-model="email">
+                v-model="email"
+                :rules="[
+                  v => !!v || $t('rule.email.required'),
+                  v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || $t('rule.email.valid')
+                ]"
+                required>
               </v-text-field>
             </v-flex>
             <v-flex>
               <v-text-field
                 :label="$t('password')"
                 type="password"
-                required
-                v-model="pssword">
+                v-model="password"
+                :rules="[
+                  v => !!v || $t('rule.password.required')
+                ]"
+                required>
               </v-text-field>
             </v-flex>
             <v-flex class="text-xs-center" mt-5>
-              <v-btn @submit.prevent="signin" color="primary" type="submit">{{ $t('signin') }}</v-btn>
+              <v-btn @click.prevent="signin" type="submit" color="primary">{{ $t('signin') }}</v-btn>
+              <v-btn @click.prevent="reset" color="primary">{{ $t('reset') }}</v-btn>
             </v-flex>
           </v-layout>
         </form>
@@ -82,18 +93,28 @@ export default {
   }),
   methods: {
     signin (event) {
-      // HTTP.post('posts', {})
+      // this.$http.post('posts', {})
       //   .then(response => {
       //     this.response = response.data
-      //     this.$router.push({ path: '/welcome' })
+      //     this.$router.push({ path: '/home' })
       //   })
       //   .catch(e => {
       //     this.errors.push(e)
       //   })
       firebase.auth().signInWithEmailAndPassword(this.email, this.password).then(
-        user => this.$router.push('/home'),
-        error => alert('Oops! : ' + error)
+        user => {
+          EventBus.$emit('signed-in')
+          this.$router.push('/home')
+        },
+        error => {
+          alert('Oops! : ' + error)
+        }
       )
+    },
+    reset (event) {
+      this.email = ''
+      this.password = ''
+      this.$router.push('/landing')
     }
   }
 }

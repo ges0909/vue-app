@@ -15,16 +15,16 @@ Vue.use(VueI18n)
 Vue.use(FlagIcon)
 Vue.config.productionTip = false
 
-export const HTTP = axios.create({
+const i18n = new VueI18n({
+  locale: 'de',
+  fallbackLocale: 'en'
+})
+
+const http = axios.create({
   baseURL: `http://jsonplaceholder.typicode.com/`,
   headers: {
     Authorization: 'Bearer {token}'
   }
-})
-
-const i18n = new VueI18n({
-  locale: 'de',
-  fallbackLocale: 'en'
 })
 
 // Initialize Firebase
@@ -41,6 +41,7 @@ firebase.initializeApp(config)
 /* eslint-disable no-new */
 new Vue({
   i18n,
+  http,
   router,
   el: '#app',
   template: '<App/>',

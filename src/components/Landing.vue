@@ -1,18 +1,34 @@
+<i18n>
+{
+   "en": {
+      "welcome": "Welcome to Awesome App",
+      "text": "It's a basic Single Page application <br> with Google Firebase authentication",
+      "singin": "Sigin",
+      "signup": "Signup"
+    },
+   "de": {
+      "welcome": "Willkommen zu einer aufregenden App",
+      "text": "Das ist eine Single Page Anwendung <br> mit Authentifizierung über Google Firebase",
+      "signin": "Anmelden",
+      "signup": "Registrieren"
+    }
+}
+</i18n>
+
 <template>
   <v-container fluid>
     <v-layout row wrap>
       <v-flex xs12 class="text-xs-center" mt-5>
-        <h1>Welcome to Awesome App</h1>
+        <h1>{{ $t('welcome') }}</h1>
       </v-flex>
       <v-flex xs12 sm6 offset-sm3 mt-3>
         <blockquote class="blockquote text-xs-center">
-          It's a basic Single Page application <br>
-          with Google Firebase authentication
+          <span v-html="$t('text')"></span>
         </blockquote>
       </v-flex>
       <v-flex xs12 sm6 offset-sm3 class="text-xs-center" mt-5>
-        <v-btn color="primary" to="/signup">Sign Up</v-btn>
-        <v-btn to="/signin">Sign In</v-btn>
+        <v-btn color="primary" to="/signin"> {{ $t('signin') }} </v-btn>
+        <v-btn color="primary" to="/signup"> {{ $t('signup') }} </v-btn>
       </v-flex>
     </v-layout>
   </v-container>

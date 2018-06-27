@@ -50,28 +50,39 @@
               <v-text-field
                 :label="$t('email')"
                 type="email"
-                required
-                v-model="email">
+                v-model="email"
+                :rules="[
+                  v => !!v || $t('rule.email.required'),
+                  v => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(v) || $t('rule.email.valid')
+                ]"
+                required>
               </v-text-field>
             </v-flex>
             <v-flex>
               <v-text-field
                 :label="$t('password')"
                 type="password"
-                required
-                v-model="password">
+                v-model="password"
+                :rules="[
+                  v => !!v || $t('rule.password.required')
+                ]"
+                required>
               </v-text-field>
             </v-flex>
             <v-flex>
               <v-text-field
                 :label="$t('confirm')"
                 type="password"
-                required
-                v-model="confirmedPassword">
-                </v-text-field>
+                v-model="passwordConfirmed"
+                :rules="[
+                  v => !!v || $t('rule.password.required')
+                ]"
+                required>
+              </v-text-field>
             </v-flex>
             <v-flex class="text-xs-center" mt-5>
-              <v-btn @submit.prevent="signup" color="primary" type="submit">{{ $t('signup') }}</v-btn>
+              <v-btn @click.prevent="signup" type="submit" color="primary">{{ $t('signup') }}</v-btn>
+              <v-btn @click.prevent="reset" color="primary">{{ $t('reset') }}</v-btn>
             </v-flex>
           </v-layout>
         </form>
@@ -88,19 +99,20 @@ export default {
     return {
       email: '',
       password: '',
-      confirmedPassword: ''
+      passwordConfirmed: ''
     }
   },
   methods: {
     signup (event) {
       firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
-        user => alert('You are registered successfully!'),
+        user => this.$router.push('/signin'),
         error => alert('Something went wrong: ' + error)
       )
     },
-    onReset (event) {
+    reset (event) {
       this.email = ''
       this.password = ''
+      this.$router.push('/landning')
     }
   }
 }

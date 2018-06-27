@@ -4,6 +4,7 @@ import firebase from 'firebase'
 import Vuetify from 'vuetify'
 import VueI18n from 'vue-i18n'
 import FlagIcon from 'vue-flag-icon'
+import { store } from './store'
 import router from './router'
 import App from './App'
 
@@ -42,6 +43,7 @@ firebase.initializeApp(config)
 new Vue({
   i18n,
   http,
+  store,
   router,
   el: '#app',
   template: '<App/>',

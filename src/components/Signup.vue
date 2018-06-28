@@ -5,8 +5,9 @@
       "email": "E-mail",
       "password": "Password",
       "confirm": "Confirm",
-      "signup": "Signup",
-      "reset": "Reset",
+      "signup": "Sign-up",
+      "cancel": "Cancel",
+      "nomatch": "Passwords don\\'t match",
       "rule": {
         "email": {
           "required": "E-mail is required",
@@ -23,7 +24,8 @@
       "password": "Passwort",
       "confirm": "Wiederholung",
       "signup": "Registrieren",
-      "reset": "Abbrechen",
+      "cancel": "Abbrechen",
+      "nomatch": "Passwörter stimmen nicht überein",
       "rule": {
         "email": {
           "required": "E-Mail ist erforderlich",
@@ -40,12 +42,22 @@
 <template>
   <v-container fluid>
     <v-layout row wrap>
-      <v-flex xs12 class="text-xs-center" mt-5>
-        <h1>{{ $t('title') }}</h1>
-      </v-flex>
       <v-flex xs12 sm6 offset-sm3 mt-3>
-        <form>
+        <form @submit.prevent="signup">
           <v-layout column>
+
+            <v-flex>
+              <v-alert type="error" dismissible transition="fade-transition" v-model="alert">
+                {{ error }}
+              </v-alert>
+            </v-flex>
+
+            <v-flex xs12 class="text-xs-center" mt-5>
+              <h1>
+                {{ $t('title') }}
+              </h1>
+            </v-flex>
+
             <v-flex>
               <v-text-field
                 :label="$t('email')"
@@ -58,6 +70,7 @@
                 required>
               </v-text-field>
             </v-flex>
+
             <v-flex>
               <v-text-field
                 :label="$t('password')"
@@ -69,21 +82,26 @@
                 required>
               </v-text-field>
             </v-flex>
+
             <v-flex>
               <v-text-field
                 :label="$t('confirm')"
                 type="password"
-                v-model="passwordConfirmed"
-                :rules="[
-                  v => !!v || $t('rule.password.required')
-                ]"
+                v-model="passwordConfirm"
+                :rules="[comparePasswords]"
                 required>
               </v-text-field>
             </v-flex>
+
             <v-flex class="text-xs-center" mt-5>
-              <v-btn @click.prevent="signup" type="submit" color="primary">{{ $t('signup') }}</v-btn>
-              <v-btn @click.prevent="reset" color="primary">{{ $t('reset') }}</v-btn>
+              <v-btn type="submit" color="primary" :disabled="loading">
+                {{ $t('signup') }}
+              </v-btn>
+              <v-btn @click.prevent="cancel" color="primary">
+                {{ $t('cancel') }}
+              </v-btn>
             </v-flex>
+
           </v-layout>
         </form>
       </v-flex>
@@ -92,24 +110,45 @@
 </template>
 
 <script>
-import firebase from 'firebase'
 
 export default {
-  data () {
-    return {
-      email: '',
-      password: '',
-      passwordConfirmed: ''
+  data: () => ({
+    email: '',
+    password: '',
+    passwordConfirm: '',
+    alert: false
+  }),
+  computed: {
+    comparePasswords () {
+      return this.password === this.passwordConfirm ? true : this.$t('nomatch')
+    },
+    error () {
+      return this.$store.state.error
+    },
+    loading () {
+      return this.$store.state.loading
+    }
+  },
+  watch: {
+    error (value) {
+      if (value) {
+        this.alert = true
+      }
+    },
+    alert (value) {
+      if (!value) {
+        this.$store.commit('setError', null)
+      }
     }
   },
   methods: {
     signup (event) {
-      firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
-        user => this.$router.push('/signin'),
-        error => alert('Something went wrong: ' + error)
-      )
+      if (!this.comparePasswords) { // computed property, therefore no '()'
+        return
+      }
+      this.$store.dispatch('signup', { email: this.email, password: this.password })
     },
-    reset (event) {
+    cancel (event) {
       this.email = ''
       this.password = ''
       this.$router.push('/landning')

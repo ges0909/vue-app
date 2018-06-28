@@ -3,8 +3,8 @@
    "en": {
       "title": "My App",
       "home": "Home",
-      "singin": "Sigin",
-      "signup": "Signup",
+      "signin": "Sig-in",
+      "signup": "Sign-up",
       "logout": "Logout"
     },
    "de": {
@@ -118,7 +118,7 @@ export default {
       })
     }
   },
-  mounted () {
+  mounted: () => {
     var self = this
     EventBus.$on('signed-in', () => {
       self.items.forEach(item => { item.show = !item.show })

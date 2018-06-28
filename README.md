@@ -87,20 +87,14 @@ yarn add bootstrap-vue
 
 ```bash
 yarn add vue-i18n
+yarn add @kazupon/vue-i18n-loader
 ```
 
 More [here]((http://kazupon.github.io/vue-i18n/introduction.html)) and in:
 
 * [Internationalization with vue-i18n: Part 1](https://medium.com/vuejoy/internationalization-in-vue-with-vue-i18n-part-1-a1a3c6b47755)
 * [Internationalization with vue-i18n: Part 2](https://medium.com/vuejoy/internationalization-with-vue-i18n-part-2-8256e80c2302)
-
-### vue-i18n-loader
-
-```bash
-yarn add @kazupon/vue-i18n-loader
-```
-
-Read [here](http://kazupon.github.io/vue-i18n/guide/sfc.html#basic-usage) how to add loader to `build/webpack.base.conf.js`.
+* Read [here](http://kazupon.github.io/vue-i18n/guide/sfc.html#basic-usage) how to add loader to `build/webpack.base.conf.js`.
 
 ### Material Icons
 

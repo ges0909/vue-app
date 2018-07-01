@@ -10,7 +10,8 @@ export const store = new Vuex.Store({
   state: {
     user: null,
     error: null,
-    loading: false
+    loading: false,
+    locale: null
   },
 
   // defines calls that will commit changes to your store
@@ -52,6 +53,9 @@ export const store = new Vuex.Store({
     },
     autoSignin ({ commit }, payload) {
       commit('setUser', { email: payload.email })
+    },
+    changeLocale ({ commit }, lang) {
+      commit('setLocale', lang)
     }
   },
 
@@ -65,12 +69,16 @@ export const store = new Vuex.Store({
     },
     setLoading (state, payload) {
       state.loading = payload
+    },
+    setLocale (state, lang) {
+      state.locale = lang
     }
   },
 
   // are a way to grab computed data from the store
   getters: {
     isAuthenticated: (state) => state.user !== null && state.user !== undefined
+    // locale: (state) => state.locale
   },
 
   // provides a way to split your store in multiple stores

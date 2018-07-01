@@ -64,15 +64,21 @@
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
 
-        <v-btn flat to="/home" v-show="isAuthenticated">
-          <v-icon left dark>home</v-icon>
-          {{ $t('home') }}
-        </v-btn>
+        <v-tooltip bottom>
+          <v-btn flat to="/home" slot="activator" v-show="isAuthenticated">
+            <v-icon left dark>home</v-icon>
+            <!-- {{ $t('home') }} -->
+          </v-btn>
+          <span>{{ $t('home') }}</span>
+        </v-tooltip>
 
-        <v-btn flat @click="signout" v-show="isAuthenticated">
-          <v-icon left dark>close</v-icon>
-          {{ $t('signout') }}
-        </v-btn>
+        <v-tooltip bottom>
+          <v-btn flat @click="signout" slot="activator" v-show="isAuthenticated">
+            <v-icon left dark>close</v-icon>
+            <!-- {{ $t('signout') }} -->
+          </v-btn>
+          <span>{{ $t('signout') }}</span>
+        </v-tooltip>
 
         <v-menu offset-y>
           <v-btn flat slot="activator">
@@ -96,8 +102,6 @@
 </template>
 
 <script>
-import event from '@/event'
-
 export default {
   data () {
     return {
@@ -111,7 +115,7 @@ export default {
       },
       set (lang) {
         this.$i18n.locale = lang
-        event.$emit('localechanged', lang)
+        this.$store.dispatch('changeLocale', lang)
       }
     },
     languages () {
@@ -121,18 +125,13 @@ export default {
       return this.$store.getters.isAuthenticated
     }
   },
-  watch: {
-    locale (lang) {
-      alert('App::watch: ' + lang)
-    }
-  },
   methods: {
     signout () {
       this.$store.dispatch('signout')
     }
-  },
-  mounted () {
   }
+  // mounted () {
+  // }
 }
 </script>
 

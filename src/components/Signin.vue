@@ -97,15 +97,12 @@
 </template>
 
 <script>
-import event from '@/event'
-
 export default {
   data () {
     return {
       email: '',
       password: '',
-      alert: false,
-      mylocale: this.locale
+      alert: false
     }
   },
   computed: {
@@ -116,7 +113,7 @@ export default {
       return this.$store.state.loading
     },
     locale () {
-      return this.$i18n.locale
+      return this.$store.state.locale
     }
   },
   watch: {
@@ -130,8 +127,8 @@ export default {
         this.$store.commit('setError', null)
       }
     },
-    mylocale (lang) {
-      alert('Signin::watch: ' + lang)
+    locale (lang) {
+      this.$i18n.locale = lang
     }
   },
   methods: {
@@ -143,26 +140,22 @@ export default {
       this.password = ''
       this.$router.push('/landing')
     }
-  },
-  beforeCreate () {
-  },
-  created () {
-  },
-  beforeMount () {
-  },
-  mounted () {
-    event.$on('localechanged', function (lang) {
-      this.mylocale = lang
-      alert('localechanged: ' + this.mylocale)
-    })
-  },
-  beforeUpdate () {
-  },
-  updated () {
-  },
-  beforeDestroy () {
-  },
-  destroyed () {
   }
+  // beforeCreate () {
+  // },
+  // created () {
+  // },
+  // beforeMount () {
+  // },
+  // mounted () {
+  // },
+  // beforeUpdate () {
+  // },
+  // updated () {
+  // },
+  // beforeDestroy () {
+  // },
+  // destroyed () {
+  // }
 }
 </script>

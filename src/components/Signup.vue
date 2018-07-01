@@ -126,6 +126,9 @@ export default {
     },
     loading () {
       return this.$store.state.loading
+    },
+    locale () {
+      return this.$store.state.locale
     }
   },
   watch: {
@@ -138,6 +141,9 @@ export default {
       if (!value) {
         this.$store.commit('setError', null)
       }
+    },
+    locale (lang) {
+      this.$i18n.locale = lang
     }
   },
   methods: {

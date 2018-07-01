@@ -57,7 +57,9 @@
       </v-avatar> -->
       <v-toolbar-title id="title">
         <router-link to="/" tag="span" style="cursor: pointer">
-          {{ $t('title') }}
+          <h1>
+            {{ $t('title') }}
+          </h1>
         </router-link>
       </v-toolbar-title>
 

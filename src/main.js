@@ -48,5 +48,12 @@ new Vue({
   el: '#app',
   template: '<App/>',
   components: { App },
+  created () {
+    firebase.auth().onAuthStateChanged((firebaseUser) => {
+      if (firebaseUser) {
+        store.dispatch('autoSignin', firebaseUser)
+      }
+    })
+  },
   mounted () {} // fetch initial data
 })

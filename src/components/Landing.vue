@@ -1,13 +1,13 @@
 <i18n>
 {
-   "en": {
-      "welcome": "Welcome to Awesome App",
+   "gb": {
+      "welcome": "Welcome to my Awesome App",
       "text": "It's a basic Single Page application <br> with Google Firebase authentication",
       "singin": "Sigin",
       "signup": "Signup"
     },
    "de": {
-      "welcome": "Willkommen zu einer aufregenden App",
+      "welcome": "Willkommen zu meiner aufregenden App",
       "text": "Das ist eine Single Page Anwendung <br> mit Authentifizierung über Google Firebase",
       "signin": "Anmelden",
       "signup": "Registrieren"

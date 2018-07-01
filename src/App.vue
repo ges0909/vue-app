@@ -1,19 +1,19 @@
 <i18n>
 {
-   "en": {
-      "title": "My App",
-      "home": "Home",
-      "signin": "Sig-in",
-      "signup": "Sign-up",
-      "logout": "Logout"
-    },
-   "de": {
-      "title": "Meine App",
-      "home": "Home",
-      "signin": "Anmelden",
-      "signup": "Registrieren",
-      "logout": "Abmelden"
-    }
+  "gb": {
+    "title": "My App",
+    "home": "Home",
+    "signin": "Sig-in",
+    "signup": "Sign-up",
+    "signout": "Sign-out"
+  },
+  "de": {
+    "title": "Meine App",
+    "home": "Home",
+    "signin": "Anmelden",
+    "signup": "Registrieren",
+    "signout": "Abmelden"
+  }
 }
 </i18n>
 
@@ -21,16 +21,25 @@
   <v-app>
     <v-navigation-drawer v-model="sidebar" app>
       <v-list>
+
         <v-list-tile
-          v-for="item in items"
-          :key="item.title"
-          :to="item.path"
-          v-show="item.show">
+          to="/home"
+          v-show="isAuthenticated">
           <v-list-tile-action>
-            <v-icon>{{ item.icon }}</v-icon>
+            <v-icon>home</v-icon>
           </v-list-tile-action>
-          <v-list-tile-content>{{ $t(item.title) }}</v-list-tile-content>
+          <v-list-tile-content>{{ $t('home') }}</v-list-tile-content>
         </v-list-tile>
+
+        <v-list-tile
+          v-show="isAuthenticated"
+          @click.prevent="signout">
+          <v-list-tile-action>
+            <v-icon>close</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>{{ $t('signout') }}</v-list-tile-content>
+        </v-list-tile>
+
       </v-list>
     </v-navigation-drawer>
 
@@ -39,42 +48,44 @@
         <v-toolbar-side-icon @click="sidebar=!sidebar">
         </v-toolbar-side-icon>
       </span>
+
+      <!-- <v-avatar
+        tile="true"
+        size="24"
+        color="grey lighten-4">
+        <img src="./assets/logo.png" alt="avatar">
+      </v-avatar> -->
       <v-toolbar-title id="title">
-        <h1>
-          <router-link to="/" tag="span" style="cursor: pointer">
-            {{ $t('title') }}
-          </router-link>
-        </h1>
+        <router-link to="/" tag="span" style="cursor: pointer">
+          {{ $t('title') }}
+        </router-link>
       </v-toolbar-title>
+
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn
-          flat
-          v-for="item in items"
-          :key="item.title"
-          :to="item.path"
-          v-show="item.show">
-          <v-icon left dark>{{ item.icon }}</v-icon>
-          {{ $t(item.title) }}
+
+        <v-btn flat to="/home" v-show="isAuthenticated">
+          <v-icon left dark>home</v-icon>
+          {{ $t('home') }}
         </v-btn>
+
+        <v-btn flat @click="signout" v-show="isAuthenticated">
+          <v-icon left dark>close</v-icon>
+          {{ $t('signout') }}
+        </v-btn>
+
         <v-menu offset-y>
           <v-btn flat slot="activator">
-            <flag :iso="lang"></flag>
-            <v-spacer></v-spacer>
-            {{ lang }}
+            <flag :iso="locale"></flag>
+            <v-icon dark>arrow_drop_down</v-icon>
           </v-btn>
           <v-list>
-            <v-list-tile v-for="ln in languages" :key="ln" @click.prevent="lang=ln">
-              <flag :iso="ln"></flag>
-              <v-spacer></v-spacer>
-              <v-list-tile-content>
-                <v-list-tile-title>
-                  {{ ln.toUpperCase() }}
-                </v-list-tile-title>
-              </v-list-tile-content>
+            <v-list-tile v-for="lang in languages" :key="lang" @click.prevent="locale=lang">
+              <flag :iso="lang"></flag>
             </v-list-tile>
           </v-list>
         </v-menu>
+
       </v-toolbar-items>
     </v-toolbar>
 
@@ -85,44 +96,50 @@
 </template>
 
 <script>
-import firebase from 'firebase'
-import { EventBus } from './eventbus'
+import event from '@/event'
 
 export default {
-  data: () => ({
-    sidebar: false,
-    items: [
-      { title: 'home', path: '/home', icon: 'home', show: false },
-      { title: 'signin', path: '/signin', icon: 'lock', show: true },
-      { title: 'signup', path: '/signup', icon: 'person', show: true },
-      { title: 'logout', path: '/logout', icon: 'close', show: false }
-    ]
-  }),
+  data () {
+    return {
+      sidebar: false
+    }
+  },
   computed: {
-    lang: {
+    locale: {
       get () {
-        return (this.$i18n.locale === 'en') ? 'gb' : this.$i18n.locale
+        return this.$i18n.locale
       },
-      set (ln) {
-        this.$i18n.locale = (ln === 'gb') ? 'en' : ln
+      set (lang) {
+        this.$i18n.locale = lang
+        event.$emit('localechanged', lang)
       }
     },
     languages () {
-      return Object.keys(this.$i18n.messages).map(ln => ln === 'en' ? 'gb' : ln)
+      return Object.keys(this.$i18n.messages)
+    },
+    isAuthenticated () {
+      return this.$store.getters.isAuthenticated
+    }
+  },
+  watch: {
+    locale (lang) {
+      alert('App::watch: ' + lang)
     }
   },
   methods: {
-    logout () {
-      firebase.auth().signOut().then(() => {
-        this.$router.push({ path: '/login' })
-      })
+    signout () {
+      this.$store.dispatch('signout')
     }
   },
-  mounted: () => {
-    var self = this
-    EventBus.$on('signed-in', () => {
-      self.items.forEach(item => { item.show = !item.show })
-    })
+  mounted () {
   }
 }
 </script>
+
+/*******************************************************************************
+<style scoped>
+* {
+text-transform: none !important;
+}
+</style>
+ ******************************************************************************/

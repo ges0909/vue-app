@@ -1,23 +1,20 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// import firebase from 'firebase'
+import firebase from 'firebase'
 
 // route lazy loading: https://router.vuejs.org/guide/advanced/lazy-loading.html
-// import Home from '@/components/Home'
-// import Signin from '@/components/Signin'
-// import Signup from '@/components/Signup'
-const Landing = () => import('@/components/Landing') // '@' points in vue  to 'src/'
+const Home = () => import('@/components/Home') // '@' points in vue  to 'src/'
 const Signin = () => import('@/components/Signin')
 const Signup = () => import('@/components/Signup')
-const Home = () => import('@/components/Home')
+const Landing = () => import('@/components/Landing')
+const NotFound = () => import('@/components/NotFound')
 
 Vue.use(Router)
 
 const routes = [
   {
-    // redirect unknown paths to Login view
     path: '*',
-    redirect: 'landing'
+    component: NotFound // catch-all route
   },
   {
     path: '/',
@@ -48,14 +45,20 @@ const routes = [
   }
 ]
 
-export default new Router({
+const router = new Router({
   mode: 'history',
   routes
-  // beforeEach: (to, from, next) => {
-  //   let currentUser = firebase.auth().currentUser
-  //   let requiresAuth = to.matched.some((record) => record.meta.redirect)
-  //   if (requiresAuth && !currentUser) next('sigin')
-  //   else if (!requiresAuth && currentUser) next('home')
-  //   else next()
-  // }
 })
+
+// guard will be executed each time a new route is entered
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some((record) => record.meta.requiresAuth)
+  const isAuthenticated = firebase.auth().currentUser
+  if (requiresAuth && !isAuthenticated) {
+    next('/signin')
+  } else {
+    next()
+  }
+})
+
+export default router

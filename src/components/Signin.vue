@@ -1,37 +1,37 @@
 <i18n>
 {
-   "en": {
-      "title": "Sign-in form",
-      "email": "E-mail",
-      "password": "Password",
-      "signin": "Sign-in",
-      "cancel": "Cancel",
-      "rule": {
-        "email": {
-          "required": "E-mail is required",
-          "valid": "E-mail must be valid"
-        },
-        "password": {
-          "required": "Passwort is required"
-        }
+  "gb": {
+    "title": "Sign-in form",
+    "email": "E-mail",
+    "password": "Password",
+    "signin": "Sign-in",
+    "cancel": "Cancel",
+    "rule": {
+      "email": {
+        "required": "E-mail is required",
+        "valid": "E-mail must be valid"
+      },
+      "password": {
+        "required": "Passwort is required"
       }
-    },
-   "de": {
-      "title": "Anmeldung",
-      "email": "E-Mail",
-      "password": "Passwort",
-      "signin": "Anmelden",
-      "cancel": "Abbrechen",
-      "rule": {
-        "email": {
-          "required": "E-Mail ist erforderlich",
-          "valid": "E-Mail ist ungültig"
-        },
-        "password": {
-          "required": "Passwort ist erforderlich"
-        }
+     }
+   },
+  "de": {
+    "title": "Anmeldung",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "signin": "Anmelden",
+    "cancel": "Abbrechen",
+    "rule": {
+      "email": {
+        "required": "E-Mail ist erforderlich",
+        "valid": "E-Mail ist ungültig"
+      },
+      "password": {
+        "required": "Passwort ist erforderlich"
       }
     }
+  }
 }
 </i18n>
 
@@ -81,7 +81,7 @@
             </v-flex>
 
             <v-flex class="text-xs-center" mt-5>
-              <v-btn type="submit" color="primary"  :disabled="loading">
+              <v-btn type="submit" color="primary" :disabled="loading">
                 {{ $t('signin') }}
               </v-btn>
               <v-btn @click.prevent="cancel" color="primary">
@@ -97,22 +97,26 @@
 </template>
 
 <script>
-// import {HTTP} from '../main'
-// import firebase from 'firebase'
-// import { EventBus } from '../eventbus'
+import event from '@/event'
 
 export default {
-  data: () => ({
-    email: '',
-    password: '',
-    alert: false
-  }),
+  data () {
+    return {
+      email: '',
+      password: '',
+      alert: false,
+      mylocale: this.locale
+    }
+  },
   computed: {
     error () {
       return this.$store.state.error
     },
     loading () {
       return this.$store.state.loading
+    },
+    locale () {
+      return this.$i18n.locale
     }
   },
   watch: {
@@ -125,6 +129,9 @@ export default {
       if (!value) {
         this.$store.commit('setError', null)
       }
+    },
+    mylocale (lang) {
+      alert('Signin::watch: ' + lang)
     }
   },
   methods: {
@@ -136,6 +143,26 @@ export default {
       this.password = ''
       this.$router.push('/landing')
     }
+  },
+  beforeCreate () {
+  },
+  created () {
+  },
+  beforeMount () {
+  },
+  mounted () {
+    event.$on('localechanged', function (lang) {
+      this.mylocale = lang
+      alert('localechanged: ' + this.mylocale)
+    })
+  },
+  beforeUpdate () {
+  },
+  updated () {
+  },
+  beforeDestroy () {
+  },
+  destroyed () {
   }
 }
 </script>

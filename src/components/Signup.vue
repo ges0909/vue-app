@@ -1,41 +1,41 @@
 <i18n>
 {
-   "en": {
-      "title": "Sign-up form",
-      "email": "E-mail",
-      "password": "Password",
-      "confirm": "Confirm",
-      "signup": "Sign-up",
-      "cancel": "Cancel",
-      "nomatch": "Passwords don\\'t match",
-      "rule": {
-        "email": {
-          "required": "E-mail is required",
-          "valid": "E-mail must be valid"
-        },
-        "password": {
-          "required": "Passwort is required"
-        }
-      }
-    },
-   "de": {
-      "title": "Registrierung",
-      "email": "E-Mail",
-      "password": "Passwort",
-      "confirm": "Wiederholung",
-      "signup": "Registrieren",
-      "cancel": "Abbrechen",
-      "nomatch": "Passwörter stimmen nicht überein",
-      "rule": {
-        "email": {
-          "required": "E-Mail ist erforderlich",
-          "valid": "E-Mail ist ungültig"
-        },
-        "password": {
-          "required": "Passwort ist erforderlich"
-        }
+  "gb": {
+    "title": "Sign-up form",
+    "email": "E-mail",
+    "password": "Password",
+    "confirm": "Confirm",
+    "signup": "Sign-up",
+    "cancel": "Cancel",
+    "nomatch": "Passwords don\\'t match",
+    "rule": {
+      "email": {
+        "required": "E-mail is required",
+        "valid": "E-mail must be valid"
+      },
+      "password": {
+        "required": "Passwort is required"
       }
     }
+  },
+  "de": {
+    "title": "Registrierung",
+    "email": "E-Mail",
+    "password": "Passwort",
+    "confirm": "Wiederholung",
+    "signup": "Registrieren",
+    "cancel": "Abbrechen",
+    "nomatch": "Passwörter stimmen nicht überein",
+    "rule": {
+      "email": {
+        "required": "E-Mail ist erforderlich",
+        "valid": "E-Mail ist ungültig"
+      },
+      "password": {
+        "required": "Passwort ist erforderlich"
+      }
+    }
+  }
 }
 </i18n>
 
@@ -110,7 +110,6 @@
 </template>
 
 <script>
-
 export default {
   data: () => ({
     email: '',
@@ -151,7 +150,7 @@ export default {
     cancel (event) {
       this.email = ''
       this.password = ''
-      this.$router.push('/landning')
+      this.$router.push('/landing')
     }
   }
 }

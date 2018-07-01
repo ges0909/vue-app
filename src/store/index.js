@@ -20,8 +20,8 @@ export const store = new Vuex.Store({
       firebase
         .auth()
         .createUserWithEmailAndPassword(payload.email, payload.password)
-        .then((user) => {
-          commit('setUser', { email: user.email })
+        .then((firebaseUser) => {
+          commit('setUser', { email: firebaseUser.email })
           commit('setLoading', false)
           router.push('/signin')
         })
@@ -35,8 +35,8 @@ export const store = new Vuex.Store({
       firebase
         .auth()
         .signInWithEmailAndPassword(payload.email, payload.password)
-        .then((user) => {
-          commit('setUser', { email: user.email })
+        .then((firebaseUser) => {
+          commit('setUser', { email: firebaseUser.email })
           commit('setLoading', false)
           router.push('/home')
         })
@@ -44,6 +44,14 @@ export const store = new Vuex.Store({
           commit('setError', error.message)
           commit('setLoading', false)
         })
+    },
+    signout ({ commit }) {
+      firebase.auth().signOut()
+      commit('setUser', null)
+      router.push('/')
+    },
+    autoSignin ({ commit }, payload) {
+      commit('setUser', { email: payload.email })
     }
   },
 
@@ -61,7 +69,9 @@ export const store = new Vuex.Store({
   },
 
   // are a way to grab computed data from the store
-  getters: {},
+  getters: {
+    isAuthenticated: (state) => state.user !== null && state.user !== undefined
+  },
 
   // provides a way to split your store in multiple stores
   modules: {}

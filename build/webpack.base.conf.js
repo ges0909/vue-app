@@ -1,11 +1,11 @@
-'use strict';
-const path = require('path');
-const utils = require('./utils');
-const config = require('../config');
-const vueLoaderConfig = require('./vue-loader.conf');
+'use strict'
+const path = require('path')
+const utils = require('./utils')
+const config = require('../config')
+const vueLoaderConfig = require('./vue-loader.conf')
 
-function resolve(dir) {
-  return path.join(__dirname, '..', dir);
+function resolve (dir) {
+  return path.join(__dirname, '..', dir)
 }
 
 const createLintingRule = () => ({
@@ -17,7 +17,7 @@ const createLintingRule = () => ({
     formatter: require('eslint-friendly-formatter'),
     emitWarning: !config.dev.showEslintErrorsInOverlay
   }
-});
+})
 
 module.exports = {
   context: path.resolve(__dirname, '../'),
@@ -79,6 +79,10 @@ module.exports = {
           limit: 10000,
           name: utils.assetsPath('fonts/[name].[hash:7].[ext]')
         }
+      },
+      {
+        test: /\.pug$/,
+        loader: 'pug-plain-loader'
       }
     ]
   },
@@ -94,4 +98,4 @@ module.exports = {
     tls: 'empty',
     child_process: 'empty'
   }
-};
+}

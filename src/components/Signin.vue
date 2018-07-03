@@ -98,13 +98,11 @@
 
 <script>
 export default {
-  data () {
-    return {
-      email: '',
-      password: '',
-      alert: false
-    }
-  },
+  data: () => ({
+    email: '',
+    password: '',
+    alert: false
+  }),
   computed: {
     error () {
       return this.$store.state.error

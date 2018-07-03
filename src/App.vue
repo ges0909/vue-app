@@ -2,33 +2,37 @@
 {
   "gb": {
     "title": "My App",
-    "home": "Home",
-    "signin": "Sig-in",
+    "signin": "Sign",
     "signup": "Sign-up",
-    "signout": "Sign-out"
+    "signout": "Sign-out",
+    "account": "Account",
+    "language": "Language",
+    "dashboard": "Dashboard"
   },
   "de": {
     "title": "Meine App",
-    "home": "Home",
     "signin": "Anmelden",
     "signup": "Registrieren",
-    "signout": "Abmelden"
+    "signout": "Abmelden",
+    "account": "Konto",
+    "language": "Language",
+    "dashboard": "Dashboard"
   }
 }
 </i18n>
 
 <template>
   <v-app>
+
     <v-navigation-drawer v-model="sidebar" app>
       <v-list>
-
         <v-list-tile
-          to="/home"
+          to="/dashboard"
           v-show="isAuthenticated">
           <v-list-tile-action>
-            <v-icon>home</v-icon>
+            <v-icon>dashboard</v-icon>
           </v-list-tile-action>
-          <v-list-tile-content>{{ $t('home') }}</v-list-tile-content>
+          <v-list-tile-content>{{ $t('dashboard') }}</v-list-tile-content>
         </v-list-tile>
 
         <v-list-tile
@@ -39,40 +43,56 @@
           </v-list-tile-action>
           <v-list-tile-content>{{ $t('signout') }}</v-list-tile-content>
         </v-list-tile>
-
       </v-list>
     </v-navigation-drawer>
 
-    <v-toolbar app>
+    <v-toolbar app dense="true" scroll-off-screen="true" scroll-threshold="100">
+
       <span class="hidden-sm-and-up">
         <v-toolbar-side-icon @click="sidebar=!sidebar">
         </v-toolbar-side-icon>
       </span>
 
-      <!-- <v-avatar
-        tile="true"
-        size="24"
-        color="grey lighten-4">
-        <img src="./assets/logo.png" alt="avatar">
-      </v-avatar> -->
       <v-toolbar-title id="title">
         <router-link to="/" tag="span" style="cursor: pointer">
-          <h1>
-            {{ $t('title') }}
-          </h1>
+          {{ $t('title') }}
         </router-link>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
+
       <v-toolbar-items class="hidden-sm-and-down">
 
         <v-tooltip bottom>
-          <v-btn flat to="/home" slot="activator" v-show="isAuthenticated">
-            <v-icon left dark>home</v-icon>
-            <!-- {{ $t('home') }} -->
+          <v-btn flat to="/dashboard" slot="activator" v-show="isAuthenticated">
+            <v-icon left dark>dashboard</v-icon>
+            <!-- {{ $t('dashboard') }} -->
           </v-btn>
-          <span>{{ $t('home') }}</span>
+          <span>{{ $t('dashboard') }}</span>
         </v-tooltip>
+
+        <v-tooltip bottom>
+          <v-btn flat slot="activator" v-show="isAuthenticated">
+            <v-avatar>
+              <img v-if="avatar" src="./assets/gs.jpg" alt="Avatar">
+              <v-icon v-else>account_circle</v-icon>
+              <!-- {{ $t('account') }} -->
+            </v-avatar>
+          </v-btn>
+          <span>{{ $t('account') }}</span>
+        </v-tooltip>
+
+        <v-menu offset-y>
+          <v-btn flat slot="activator">
+            <flag :iso="locale"></flag>
+            <v-icon dark>arrow_drop_down</v-icon>
+          </v-btn>
+          <v-list>
+            <v-list-tile v-for="lang of languages" :key="lang" @click.prevent="locale=lang">
+              <flag :iso="lang" size="32"></flag>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
 
         <v-tooltip bottom>
           <v-btn flat @click="signout" slot="activator" v-show="isAuthenticated">
@@ -82,34 +102,25 @@
           <span>{{ $t('signout') }}</span>
         </v-tooltip>
 
-        <v-menu offset-y>
-          <v-btn flat slot="activator">
-            <flag :iso="locale"></flag>
-            <v-icon dark>arrow_drop_down</v-icon>
-          </v-btn>
-          <v-list>
-            <v-list-tile v-for="lang in languages" :key="lang" @click.prevent="locale=lang">
-              <flag :iso="lang"></flag>
-            </v-list-tile>
-          </v-list>
-        </v-menu>
-
       </v-toolbar-items>
+
     </v-toolbar>
 
     <v-content>
-      <router-view></router-view>
+      <transition name="fade">
+        <router-view></router-view>
+      </transition>
     </v-content>
+
   </v-app>
 </template>
 
 <script>
 export default {
-  data () {
-    return {
-      sidebar: false
-    }
-  },
+  data: () => ({
+    sidebar: false,
+    avatar: false
+  }),
   computed: {
     locale: {
       get () {
@@ -137,10 +148,14 @@ export default {
 }
 </script>
 
-/*******************************************************************************
 <style scoped>
-* {
-text-transform: none !important;
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+.fade-enter-to, .fade-leave {
+  opacity: 1;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: all .3s ease;
 }
 </style>
- ******************************************************************************/

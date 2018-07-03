@@ -3,11 +3,11 @@ import Router from 'vue-router'
 import firebase from 'firebase'
 
 // route lazy loading: https://router.vuejs.org/guide/advanced/lazy-loading.html
-const Home = () => import('@/components/Home') // '@' points in vue  to 'src/'
 const Signin = () => import('@/components/Signin')
 const Signup = () => import('@/components/Signup')
 const Landing = () => import('@/components/Landing')
 const NotFound = () => import('@/components/NotFound')
+const Dashboard = () => import('@/components/Dashboard') // '@' points in vue  to 'src/'
 
 Vue.use(Router)
 
@@ -36,9 +36,9 @@ const routes = [
     component: Signup
   },
   {
-    name: 'home',
-    path: '/home',
-    component: Home,
+    name: 'dashboard',
+    path: '/dashboard',
+    component: Dashboard,
     meta: {
       requiresAuth: true
     }

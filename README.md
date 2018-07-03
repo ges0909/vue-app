@@ -2,10 +2,22 @@
 
 ## Todo
 
-* propagate locale changes to navigation bar
-* add missing fields to sign-up form
-* ~~_Reset_ button in forms~~
+* propagate locale changes to other components
+* add to toolbar
+  * _sign-in_/_sign-out_ button
+  * _about_ button
+  * avatar (with initials)
+* [vue-grid-layout](https://github.com/jbaysolutions/vue-grid-layout) for dashboard
+* [How to create Vue.js Transitions](https://medium.com/vue-mastery/how-to-create-vue-js-transitions-6487dffd0baa)
+* ~~add missing fields to sign-up form~~
+* ~~_cancel_ button in forms~~
 * ~~locale switcher with label~~
+
+## Useful yarn commands
+
+* `yarn add ...`
+* `yarn remove ...`
+* `yarn autoclean --force`
 
 ## Intro
 
@@ -130,4 +142,33 @@ yarn add firebase
 
 ```bash
 yarn add vuex
+```
+
+### Pug
+
+```bash
+yarn add pug pug-plain-loader --dev
+```
+
+## Gitbook
+
+* [gitbook toolchain](https://toolchain.gitbook.com/)
+
+```bash
+yarn add gitbook-cli --dev
+#
+yarn gitbook init docs
+yarn gitbook serve docs
+# or build static website with
+yarn gitbook build [--debug] docs
+```
+
+### Pdf
+
+* install [calibre-ebook](https://calibre-ebook.com/download_windows64) locally
+* following commands require new shell because of updated _path_ variable
+
+```bash
+yarn add ebook-convert --dev
+yarn gitbook pdf docs/ docs/mybook.pdf
 ```

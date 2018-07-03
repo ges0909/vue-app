@@ -1,24 +1,23 @@
 <i18n>
-{
-  "gb": {
-    "title": "My App",
-    "signin": "Sign",
-    "signup": "Sign-up",
-    "signout": "Sign-out",
-    "account": "Account",
-    "language": "Language",
-    "dashboard": "Dashboard"
-  },
-  "de": {
-    "title": "Meine App",
-    "signin": "Anmelden",
-    "signup": "Registrieren",
-    "signout": "Abmelden",
-    "account": "Konto",
-    "language": "Language",
-    "dashboard": "Dashboard"
-  }
-}
+gb: &en
+  title:      "My App"
+  signin:     "Sign"
+  signup:     "Sign-up"
+  signout:    "Sign-out"
+  account:    "Account"
+  language:   "Language"
+  dashboard:  "Dashboard"
+
+us: *en
+
+de:
+  title:      "Meine App"
+  signin:     "Anmelden"
+  signup:     "Registrieren"
+  signout:    "Abmelden"
+  account:    "Konto"
+  language:   "Language"
+  dashboard:  "Dashboard"
 </i18n>
 
 <template>
@@ -108,7 +107,7 @@
 
     <v-content>
       <transition name="fade">
-        <router-view></router-view>
+        <router-view :locale="locale"></router-view>
       </transition>
     </v-content>
 
@@ -132,7 +131,7 @@ export default {
       }
     },
     languages () {
-      return Object.keys(this.$i18n.messages)
+      return ['gb', 'us', 'de'] // Object.keys(this.$i18n.messages)
     },
     isAuthenticated () {
       return this.$store.getters.isAuthenticated

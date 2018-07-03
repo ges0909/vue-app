@@ -1,18 +1,17 @@
 <i18n>
-{
-   "gb": {
-      "welcome": "Welcome!",
-      "text": "It's a basic Single Page application <br> with Google Firebase authentication",
-      "singin": "Sigin",
-      "signup": "Signup"
-    },
-   "de": {
-      "welcome": "Willkommen!",
-      "text": "Das ist eine Single Page Anwendung <br> mit Authentifizierung über Google Firebase",
-      "signin": "Anmelden",
-      "signup": "Registrieren"
-    }
-}
+gb: &en
+  welcome:  "Welcome!"
+  text:     "It's a basic Single Page application <br> with Google Firebase authentication"
+  signin:   "Sign-in"
+  signup:   "Sign-up"
+
+us: *en
+
+de:
+  welcome:  "Willkommen!"
+  text:     "Das ist eine Single Page Anwendung <br> mit Authentifizierung über Google Firebase"
+  signin:   "Anmelden"
+  signup:   "Registrieren"
 </i18n>
 
 <template>
@@ -35,5 +34,12 @@
 </template>
 
 <script>
-export default {}
+export default {
+  props: ['locale'],
+  watch: {
+    locale (lang) {
+      this.$i18n.locale = lang
+    }
+  }
+}
 </script>

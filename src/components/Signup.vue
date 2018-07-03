@@ -1,42 +1,35 @@
 <i18n>
-{
-  "gb": {
-    "title": "Sign-up form",
-    "email": "E-mail",
-    "password": "Password",
-    "confirm": "Confirm",
-    "signup": "Sign-up",
-    "cancel": "Cancel",
-    "nomatch": "Passwords don\\'t match",
-    "rule": {
-      "email": {
-        "required": "E-mail is required",
-        "valid": "E-mail must be valid"
-      },
-      "password": {
-        "required": "Passwort is required"
-      }
-    }
-  },
-  "de": {
-    "title": "Registrierung",
-    "email": "E-Mail",
-    "password": "Passwort",
-    "confirm": "Wiederholung",
-    "signup": "Registrieren",
-    "cancel": "Abbrechen",
-    "nomatch": "Passwörter stimmen nicht überein",
-    "rule": {
-      "email": {
-        "required": "E-Mail ist erforderlich",
-        "valid": "E-Mail ist ungültig"
-      },
-      "password": {
-        "required": "Passwort ist erforderlich"
-      }
-    }
-  }
-}
+gb: &en
+  title:    "Sign-up form"
+  email:    "E-mail"
+  password: "Password"
+  confirm:  "Confirm"
+  signup:   "Sign-up"
+  cancel:   "Cancel"
+  nomatch:  "Passwords don\\'t match"
+  rule:
+    email:
+      required: "E-mail is required"
+      valid:    "E-mail must be valid"
+    password:
+      required: "Passwort is required"
+
+us: *en
+
+de:
+  title:    "Registrierung"
+  email:    "E-Mail"
+  password: "Passwort"
+  confirm:  "Wiederholung"
+  signup:   "Registrieren"
+  cancel:   "Abbrechen"
+  nomatch:  "Passwörter stimmen nicht überein"
+  rule:
+    email:
+      required: "E-Mail ist erforderlich"
+      valid:    "E-Mail ist ungültig"
+    password:
+      required: "Passwort ist erforderlich"
 </i18n>
 
 <template>
@@ -111,6 +104,7 @@
 
 <script>
 export default {
+  props: ['locale'],
   data: () => ({
     email: '',
     password: '',
@@ -126,9 +120,6 @@ export default {
     },
     loading () {
       return this.$store.state.loading
-    },
-    locale () {
-      return this.$store.state.locale
     }
   },
   watch: {

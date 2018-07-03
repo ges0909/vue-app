@@ -7,8 +7,10 @@
   * _sign-in_/_sign-out_ button
   * _about_ button
   * avatar (with initials)
+* add _gitbook_generated docs to _help_-button
 * [vue-grid-layout](https://github.com/jbaysolutions/vue-grid-layout) for dashboard
 * [How to create Vue.js Transitions](https://medium.com/vue-mastery/how-to-create-vue-js-transitions-6487dffd0baa)
+* integrate with _gradle_ and _spring boot_
 * ~~add missing fields to sign-up form~~
 * ~~_cancel_ button in forms~~
 * ~~locale switcher with label~~
@@ -99,7 +101,8 @@ yarn add bootstrap-vue
 
 ```bash
 yarn add vue-i18n
-yarn add @kazupon/vue-i18n-loader
+yarn add @kazupon/vue-i18n-loader --dev
+yarn add yam-loader --dev
 ```
 
 More [here]((http://kazupon.github.io/vue-i18n/introduction.html)) and in:

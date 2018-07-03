@@ -1,38 +1,31 @@
 <i18n>
-{
-  "gb": {
-    "title": "Sign-in form",
-    "email": "E-mail",
-    "password": "Password",
-    "signin": "Sign-in",
-    "cancel": "Cancel",
-    "rule": {
-      "email": {
-        "required": "E-mail is required",
-        "valid": "E-mail must be valid"
-      },
-      "password": {
-        "required": "Passwort is required"
-      }
-     }
-   },
-  "de": {
-    "title": "Anmeldung",
-    "email": "E-Mail",
-    "password": "Passwort",
-    "signin": "Anmelden",
-    "cancel": "Abbrechen",
-    "rule": {
-      "email": {
-        "required": "E-Mail ist erforderlich",
-        "valid": "E-Mail ist ungültig"
-      },
-      "password": {
-        "required": "Passwort ist erforderlich"
-      }
-    }
-  }
-}
+gb: &en
+  title:    "Sign-in form"
+  email:    "E-mail"
+  password: "Password"
+  signin:   "Sign-in"
+  cancel:   "Cancel"
+  rule:
+    email:
+      required: "E-mail is required"
+      valid:    "E-mail must be valid"
+    password:
+      required: "Passwort is required"
+
+us: *en
+
+de:
+  title:    "Anmeldung"
+  email:    "E-Mail"
+  password: "Passwort"
+  signin:   "Anmelden"
+  cancel:   "Abbrechen"
+  rule:
+    email:
+      required: "E-Mail ist erforderlich"
+      valid:    "E-Mail ist ungültig"
+    password:
+      required: "Passwort ist erforderlich"
 </i18n>
 
 <template>
@@ -98,6 +91,7 @@
 
 <script>
 export default {
+  props: ['locale'],
   data: () => ({
     email: '',
     password: '',
@@ -109,9 +103,6 @@ export default {
     },
     loading () {
       return this.$store.state.loading
-    },
-    locale () {
-      return this.$store.state.locale
     }
   },
   watch: {

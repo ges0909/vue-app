@@ -11,7 +11,9 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
-    "build": "node build/build.js"
+    "build": "node build/build.js",
+    "docs:dev": "gitbook serve docs",
+    "docs:build": "gitbook build --debug docs"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -42,7 +44,7 @@
     "babel-register": "^6.22.0",
     "chalk": "^2.0.1",
     "chromedriver": "^2.27.2",
-    "copy-webpack-plugin": "^4.0.1",
+    "copy-webpack-plugin": "^4.5.2",
     "cross-spawn": "^5.0.1",
     "css-loader": "^0.28.0",
     "ebook-convert": "^2.0.1",

@@ -1,4 +1,7 @@
-<template lang="pug">
-div(class='container col-lg-2 col-md-3 col-sm-4 col-xs-6', style='text-align:center')
-  h1(v-for='n in 99') {{ n }}. Dashboard
+<template>
+  <div class="text-xs-center">
+    <v-btn dark fab color="red">
+      <v-icon>add</v-icon>
+    </v-btn>
+  </div>
 </template>

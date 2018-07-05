@@ -11,9 +11,7 @@ gb: &en
       valid:    "E-mail must be valid"
     password:
       required: "Passwort is required"
-
 us: *en
-
 de:
   title:    "Anmeldung"
   email:    "E-Mail"

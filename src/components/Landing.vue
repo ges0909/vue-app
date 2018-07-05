@@ -4,9 +4,7 @@ gb: &en
   text:     "It's a basic Single Page application <br> with Google Firebase authentication"
   signin:   "Sign-in"
   signup:   "Sign-up"
-
 us: *en
-
 de:
   welcome:  "Willkommen!"
   text:     "Das ist eine Single Page Anwendung <br> mit Authentifizierung über Google Firebase"

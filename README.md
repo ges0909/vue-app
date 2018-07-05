@@ -15,12 +15,6 @@
 * ~~_cancel_ button in forms~~
 * ~~locale switcher with label~~
 
-## Useful yarn commands
-
-* `yarn add ...`
-* `yarn remove ...`
-* `yarn autoclean --force`
-
 ## Intro
 
 * [Vue 2 + Firebase: How to build a Vue app with Firebase authentication system in 15 minutes](https://medium.com/@anas.mammeri/vue-2-firebase-how-to-build-a-vue-app-with-firebase-authentication-system-in-15-minutes-fdce6f289c3c)
@@ -33,6 +27,8 @@ npm install -g vue-cli
 # or
 yarn global add vue-cli
 yarn global upgrade vue-cli
+# or version 3
+yarnglobal add @vue/cli
 
 # scaffold project with webpack template
 vue init webpack vue-app
@@ -95,6 +91,15 @@ yarn add vuetify
 vue init bootstrap-vue/webpack-simple vue-app
 # or
 yarn add bootstrap-vue
+```
+
+#### Quasar
+
+```bash
+yarn add quasar
+yarn add style-loader --dev
+#
+vue add quasar
 ```
 
 ### vue-i18n
@@ -164,6 +169,8 @@ yarn gitbook init docs
 yarn gitbook serve docs
 # or build static website with
 yarn gitbook build [--debug] docs
+#
+yarn add copy-webpack-plugin --dev
 ```
 
 ### Pdf

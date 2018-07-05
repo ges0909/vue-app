@@ -1,12 +1,9 @@
 <i18n>
-{
-  "gb": {
-     "notfound": "Oops, something seems to have gone wrong!"
-   },
-  "de": {
-     "notfound": "Oops, da scheint wohl <br> etwas schief gegangen zu sein!"
-   }
-}
+gb: &en
+  notfound: "Oops, something seems to have gone wrong!"
+us: *en
+de:
+  notfound: "Oops, da scheint wohl <br> etwas schief gegangen zu sein!"
 </i18n>
 
 <template>
@@ -20,5 +17,12 @@
 </template>
 
 <script>
-export default {}
+export default {
+  props: ['locale'],
+  watch: {
+    locale (lang) {
+      this.$i18n.locale = lang
+    }
+  }
+}
 </script>

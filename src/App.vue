@@ -5,6 +5,7 @@ gb: &en
   signup:     "Sign-up"
   signout:    "Sign-out"
   account:    "Account"
+  help:       "Help"
   language:   "Language"
   dashboard:  "Dashboard"
 
@@ -16,6 +17,7 @@ de:
   signup:     "Registrieren"
   signout:    "Abmelden"
   account:    "Konto"
+  help:       "Hilfe"
   language:   "Language"
   dashboard:  "Dashboard"
 </i18n>
@@ -81,6 +83,22 @@ de:
           <span>{{ $t('account') }}</span>
         </v-tooltip>
 
+        <v-tooltip bottom>
+          <v-btn flat :href="config.help.url" target="_blank" slot="activator" v-show="isAuthenticated">
+            <v-icon left dark>help_outline</v-icon>
+            <!-- {{ $t('help') }} -->
+          </v-btn>
+          <span>{{ $t('help') }}</span>
+        </v-tooltip>
+
+        <v-tooltip bottom>
+          <v-btn flat @click="signout" slot="activator" v-show="isAuthenticated">
+            <v-icon left dark>close</v-icon>
+            <!-- {{ $t('signout') }} -->
+          </v-btn>
+          <span>{{ $t('signout') }}</span>
+        </v-tooltip>
+
         <v-menu offset-y>
           <v-btn flat slot="activator">
             <flag :iso="locale"></flag>
@@ -92,14 +110,6 @@ de:
             </v-list-tile>
           </v-list>
         </v-menu>
-
-        <v-tooltip bottom>
-          <v-btn flat @click="signout" slot="activator" v-show="isAuthenticated">
-            <v-icon left dark>close</v-icon>
-            <!-- {{ $t('signout') }} -->
-          </v-btn>
-          <span>{{ $t('signout') }}</span>
-        </v-tooltip>
 
       </v-toolbar-items>
 
@@ -115,10 +125,13 @@ de:
 </template>
 
 <script>
+import config from './config'
+
 export default {
   data: () => ({
     sidebar: false,
-    avatar: false
+    avatar: false,
+    config: config
   }),
   computed: {
     locale: {

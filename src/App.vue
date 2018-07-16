@@ -154,9 +154,12 @@ export default {
     signout () {
       this.$store.dispatch('signout')
     }
+  },
+  mounted () {
+    // this.$root.$on('hello', () => {
+    //   alert('Hello received!!!')
+    // })
   }
-  // mounted () {
-  // }
 }
 </script>
 

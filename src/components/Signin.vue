@@ -120,6 +120,7 @@ export default {
   },
   methods: {
     signin (event) {
+      // this.$root.$emit('hello')
       this.$store.dispatch('signin', { email: this.email, password: this.password })
     },
     cancel (event) {

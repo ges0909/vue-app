@@ -55,5 +55,7 @@ new Vue({
       }
     })
   },
-  mounted () {} // fetch initial data
+  mounted () {
+    // fetch initial data
+  }
 })

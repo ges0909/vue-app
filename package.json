@@ -13,7 +13,8 @@
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
     "build": "node build/build.js",
     "docs:dev": "gitbook serve docs",
-    "docs:build": "gitbook build --debug docs"
+    "docs:build": "gitbook build --debug --output ./docs ./docs",
+    "clean": "del-cli ./dist ./docs/_book"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -47,6 +48,7 @@
     "copy-webpack-plugin": "^4.5.2",
     "cross-spawn": "^5.0.1",
     "css-loader": "^0.28.0",
+    "del-cli": "^1.1.0",
     "ebook-convert": "^2.0.1",
     "eslint": "^4.15.0",
     "eslint-config-standard": "^10.2.1",
